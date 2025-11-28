@@ -51,8 +51,8 @@ class RARL(BaseAlgorithm):
         tensorboard_log: Optional[str] = None,
         device: Union[torch.device, str] = "auto",
         syn_timesteps: bool = False,
-        protagonist_algo: str = "trpo",
-        adversary_algo: str = "trpo",
+        protagonist_algo: str = "ppo",
+        adversary_algo: str = "ppo",
         protagonist = None, 
         adversary = None
         ):
@@ -82,15 +82,26 @@ class RARL(BaseAlgorithm):
             self.protagonist = protagonist
         else: 
             if protagonist_kwargs is None:
-                protagonist_kwargs = dict(
-                                        batch_size= 128,
-                                        gamma= 0.999,
-                                        learning_rate= 0.007807660745967545,
-                                        n_critic_updates= 5,
-                                        cg_max_steps= 10,
-                                        target_kl= 0.005,
-                                        gae_lambda= 0.92,
-                                        )
+                # AIGC START
+                # 根据算法类型选择不同的默认参数
+                if protagonist_algo == "trpo":
+                    protagonist_kwargs = dict(
+                                            batch_size= 128,
+                                            gamma= 0.999,
+                                            learning_rate= 0.007807660745967545,
+                                            n_critic_updates= 5,
+                                            cg_max_steps= 10,
+                                            target_kl= 0.005,
+                                            gae_lambda= 0.92,
+                                            )
+                else:  # PPO 或其他算法
+                    protagonist_kwargs = dict(
+                                            batch_size= 128,
+                                            gamma= 0.999,
+                                            learning_rate= 0.0003,
+                                            gae_lambda= 0.95,
+                                            )
+                # AIGC END
 
             self.protagonist_policy = protagonist_policy
             self.protagonist_kwargs = protagonist_kwargs
@@ -109,14 +120,24 @@ class RARL(BaseAlgorithm):
             self.adversary = adversary
         else: 
             if adversary_kwargs is None: 
-                adversary_kwargs = dict(batch_size= 128,
-                                        gamma= 0.999,
-                                        learning_rate= 0.007807660745967545,
-                                        n_critic_updates= 5,
-                                        cg_max_steps= 10,
-                                        target_kl= 0.005,
-                                        gae_lambda= 0.92
-                                        )
+                # AIGC START
+                # 根据算法类型选择不同的默认参数
+                if adversary_algo == "trpo":
+                    adversary_kwargs = dict(batch_size= 128,
+                                            gamma= 0.999,
+                                            learning_rate= 0.007807660745967545,
+                                            n_critic_updates= 5,
+                                            cg_max_steps= 10,
+                                            target_kl= 0.005,
+                                            gae_lambda= 0.92
+                                            )
+                else:  # PPO 或其他算法
+                    adversary_kwargs = dict(batch_size= 128,
+                                            gamma= 0.999,
+                                            learning_rate= 0.0003,
+                                            gae_lambda= 0.95
+                                            )
+                # AIGC END
 
             self.adversary_policy = adversary_policy
             self.adversary_kwargs = adversary_kwargs

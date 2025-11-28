@@ -1,0 +1,12 @@
+CUDA_VISIBLE_DEVICES=0 python train_adversary.py --hyperparameter-path /home/xiangxuxin/code/torch-RARL/hyperparameter --algo ppo --env HalfCheetah-v3
+
+训练
+CUDA_VISIBLE_DEVICES=0 python train_adversary.py --hyperparameter-path /home/xiangxuxin/code/torch-RARL/hyperparameter --algo rarl --env HalfCheetah-v3 --adv-impact force
+
+python train_adversary.py --algo rarl --env HalfCheetah-v3 --adv-impact control --adv-fraction 0.5
+
+测试
+CUDA_VISIBLE_DEVICES=0 python evaluation/benchmark_manager.py --algo ppo --env-id HalfCheetah-v3 --model-dir scripts/saved_models --model-ids 3 3 --load-best --n-timesteps 10000 --n-seeds 5 --verbose 1 --with-obs-noise
+
+CUDA_VISIBLE_DEVICES=0 python evaluation/benchmark_manager.py --algo trpo --env-id HalfCheetah-v3 --model-dir scripts/saved_models --model-ids 1 1 --load-best --n-timesteps 10000 --n-seeds 5 --verbose 1 --with-obs-noise
+CUDA_VISIBLE_DEVICES=0 python evaluation/benchmark_manager.py --algo trpo --env-id HalfCheetah-v3 --model-dir scripts/saved_models --model-ids 1 1 --load-best --n-timesteps 10000 --n-seeds 5 --verbose 1

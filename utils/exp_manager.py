@@ -12,6 +12,9 @@ from pprint import pprint
 from typing import Any, Callable, Dict, List, Optional, Tuple
 import torch
 
+import torch.nn as nn  # 用于 hyperparams 中的 eval() 解析 nn.ReLU 等
+
+
 from optuna.samplers import BaseSampler, RandomSampler, TPESampler
 from optuna.integration.skopt import SkoptSampler
 from optuna.pruners import BasePruner, MedianPruner, SuccessiveHalvingPruner
@@ -191,7 +194,10 @@ class ExperimentManager(object):
         Returns:
             Optional[BaseAlgorithm]: return RL algorithm
         """
+        # hyperparams 是rarl.yaml
         hyperparams, sorted_hyperparams = self.read_hyperparameters()
+
+        # 这个函数负责在创建 RL 模型前，预处理和清理超参数，确保参数格式正确且能传递给模型构造函数。
         hyperparams, self.env_wrapper, self.callbacks = self._preprocess_hyperparams(hyperparams)
 
         # set up paths
@@ -205,6 +211,7 @@ class ExperimentManager(object):
             os.makedirs(self.optimize_hyperparameters_path)
 
         # create callbacks for train and test environments
+        # 这个函数负责创建训练过程中的回调函数（Callbacks），用于自动保存模型和定期评估性能。
         self.create_callbacks()
 
         # create environments

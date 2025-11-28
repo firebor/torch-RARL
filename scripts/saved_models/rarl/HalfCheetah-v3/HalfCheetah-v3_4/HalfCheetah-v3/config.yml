@@ -1,0 +1,35 @@
+!!python/object/apply:collections.OrderedDict
+- - - N_mu
+    - 5.0
+  - - N_nu
+    - 1.0
+  - - adv_fraction
+    - 2.5
+  - - adversary_kwargs
+    - dict(batch_size=512, gamma=0.999, learning_rate=0.0225, gae_lambda=0.92, n_epochs=10,
+      clip_range=0.2 )
+  - - adversary_policy
+    - MlpPolicy
+  - - adversary_policy_kwargs
+    - dict( activation_fn=torch.nn.ReLU, net_arch=[dict(pi=[64, 64], vf=[64, 64])]
+      )
+  - - device
+    - cuda:0
+  - - n_envs
+    - 1
+  - - n_steps_adversary
+    - 128
+  - - n_steps_protagonist
+    - 2048
+  - - n_timesteps
+    - 50.0
+  - - normalize
+    - true
+  - - protagonist_kwargs
+    - dict(batch_size=128, gamma=0.95, learning_rate=1.37e-05, gae_lambda=0.9, n_epochs=10,
+      clip_range=0.2 )
+  - - protagonist_policy
+    - MlpPolicy
+  - - protagonist_policy_kwargs
+    - dict( activation_fn=torch.nn.ReLU, net_arch=[dict(pi=[256, 256], vf=[256, 256])]
+      )

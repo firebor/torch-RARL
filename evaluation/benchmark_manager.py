@@ -327,6 +327,7 @@ class BenchmarkManager(object):
         trained_model_dir = os.path.join(self.model_dir, self.algo, self.env_id, foldername)
 
         stats_path = os.path.join(trained_model_dir, self.env_id)
+        # hyperparams得到的是 config.yml 文件中的内容
         hyperparams, stats_path = get_saved_hyperparams(stats_path, norm_reward=self.norm_reward, test_mode=True)
 
         if not stats_path:
@@ -367,7 +368,16 @@ class BenchmarkManager(object):
                     wrapper_kwargs.update(dict(device=self.device))
             elif loaded_args["adv_impact"] == "force": 
                 env_wrapper = AdversarialMujocoWrapper
-                wrapper_kwargs.update(dict(adv_low=loaded_args["adv_low"], adv_high=loaded_args["adv_high"], index_list=loaded_args["adv_index_list"], force_dim=loaded_args["adv_force_dim"]))
+                # AIGC START
+                # 使用 .get() 获取参数，提供默认值以兼容旧模型
+                wrapper_kwargs.update(dict(
+                    adv_fraction=loaded_args.get("adv_fraction", 1.0),
+                    adv_low=loaded_args.get("adv_low", 1.0),
+                    adv_high=loaded_args.get("adv_high", 1.0),
+                    index_list=loaded_args.get("adv_index_list", ["torso"]),
+                    force_dim=loaded_args.get("adv_force_dim", 2)
+                ))
+                # AIGC END
                 if self.device:
                     wrapper_kwargs.update(dict(device=self.device))
         else: 

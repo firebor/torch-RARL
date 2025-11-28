@@ -1,0 +1,89 @@
+!!python/object/apply:collections.OrderedDict
+- - - N_mu
+    - -1
+  - - N_nu
+    - -1
+  - - adv_delay
+    - -1
+  - - adv_env
+    - false
+  - - adv_force_dim
+    - 2
+  - - adv_fraction
+    - 1.0
+  - - adv_impact
+    - control
+  - - adv_index_list
+    - - torso
+  - - adversary_policy
+    - MlpPolicy
+  - - algo
+    - trpo
+  - - device
+    - cpu
+  - - env
+    - HalfCheetah-v3
+  - - env_kwargs
+    - null
+  - - eval_freq
+    - 10000
+  - - hyperparameter
+    - null
+  - - hyperparameter_path
+    - /home/xiangxuxin/code/torch-RARL/hyperparameter
+  - - log_folder
+    - logging
+  - - log_interval
+    - -1
+  - - n_envs
+    - 1
+  - - n_eval_envs
+    - 1
+  - - n_eval_episodes
+    - 5
+  - - n_evaluations_opt
+    - 20
+  - - n_jobs
+    - 1
+  - - n_opt_trials
+    - 10
+  - - n_startup_trials
+    - 10
+  - - n_timesteps
+    - -1
+  - - no_optim_plots
+    - false
+  - - num_exps
+    - 1
+  - - num_threads
+    - -1
+  - - optimization_log_path
+    - hyperparam_optimization
+  - - optimize_hyperparameters
+    - false
+  - - pretrained_model
+    - ''
+  - - protagonist_policy
+    - MlpPolicy
+  - - pruner
+    - median
+  - - sampler
+    - tpe
+  - - save_freq
+    - -1
+  - - save_replay_buffer
+    - false
+  - - saved_models_path
+    - saved_models
+  - - seed
+    - 2557860689
+  - - storage
+    - null
+  - - study_name
+    - null
+  - - tensorboard_log
+    - tb_logging
+  - - vec_env_type
+    - dummy
+  - - verbose
+    - 0
